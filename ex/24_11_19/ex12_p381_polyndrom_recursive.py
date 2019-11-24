@@ -4,11 +4,8 @@ def is_polyndrom(str):
         return True
 
     if len(str)==2:
-        b = str[0]==str[-1]
-    else:
-        b = is_polyndrom(str[1:len(str) - 1])
+        return str[0]==str[-1]
 
-    return str[0]==str[-1] and b
+    return is_polyndrom(str[1:len(str) - 1])
 
-
-print("is poly ",is_polyndrom("redtder"))
+print("is poly ",is_polyndrom("redtader"))
