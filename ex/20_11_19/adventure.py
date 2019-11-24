@@ -12,10 +12,8 @@ def create_rooms(nums, size, rooms, doors):
 def go_forward(position):
     #print("go_forward before", position)
     (r, x, y) = tuple(position)
-    #print(rooms[r])
-    print(rooms[r][1][5])
-    print((5,1) in rooms[r][1])
-    if list[rooms[r].value()]is not None:
+
+    if y+1 < len(rooms[r]):
         print("you are in room #", r, "cell x:y", x, y+1)
         return r, x, y+1
 
@@ -92,6 +90,8 @@ if __name__ == "__main__":
     position = [1,0,0] #list = mutable [room,x,y)
     create_rooms(2, 2, rooms, doors)
 
+    position = commands('gf', position)
+    position = commands('gf', position)
     position = commands('gf', position)
     position = commands('gf', position)
     position = commands('gf', position)
