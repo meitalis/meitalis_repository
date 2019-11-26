@@ -14,9 +14,9 @@ def check(left,current):
     return left + current
 
 def sum_by_num(n,num_slice):
-    for
+
     ans = check(n,num_slice[0])
-    if (ans == S)
+    if (ans == S):
         print("found",n,num_slice[0])
         return
     else:

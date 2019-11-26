@@ -6,7 +6,7 @@ s = 8
 def sub_sum(nums,S):
     for n in nums:
         print (n)
-        if (
+        
 
 
 
