@@ -53,5 +53,5 @@ if __name__== '__main__':
     max_word_rep, max_repetition =  count_words(file_path)
     print(max_word_rep,max_repetition)
 
+    #test regex
     clear()
-
