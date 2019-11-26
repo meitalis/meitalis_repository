@@ -1,18 +1,52 @@
+# sample 6 -
+
+# sample 5 - Write a Python program to get the factorial of a non-negative integer
+# def fractional(i,n):
+#     if i == n:
+#         return i
+#     return i * fractional(i+1,n)
+#
+# print(fractional(1,6))
+#
+#
+# def factorial(n):
+#     if n <= 1:
+#         return 1
+#     else:
+#         return n * (factorial(n - 1))
+#
+#
+# print(factorial(5))
+
 # sample 4 - Write a Python program of recursion list sum.
 # Test Data: [1, 2, [3,4], [5,6]]
 # Expected Result: 21
 
-def list_sum(num_List):
-    print("num_List=",num_List)
-    if len(num_List) == 1:
-        return num_List[0]
-    else:
-        if type(num_List[0]) is list:
-            return list_sum(num_List[0]) + list_sum(num_List[1:])
-        else:
-            return num_List[0] + list_sum(num_List[1:])
-
-print(list_sum([1, 2, [3,4], [5,6]]))
+# def list_sum(num_List):
+#     if len(num_List) == 1:
+#         if type(num_List[0]) is list:
+#             return list_sum(num_List[0])
+#         else:
+#             return num_List[0]
+#     else:
+#         if type(num_List[0]) is list:
+#             return list_sum(num_List[0]) + list_sum(num_List[1:])
+#         else:
+#             return num_List[0] + list_sum(num_List[1:])
+#
+# print(list_sum([1, 2, [13,14], [5,6]]))
+#
+#
+# def recursive_list_sum(data_list):
+# 	total = 0
+# 	for element in data_list:
+# 		if type(element) == type([]):
+# 			total = total + recursive_list_sum(element)
+# 		else:
+# 			total = total + element
+#
+# 	return total
+# print( recursive_list_sum([1, 2, [3,4],[5,6]]))
 
 # sample 3 - Write a Python program to converting an Integer to a string in any base
 
