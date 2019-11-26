@@ -17,6 +17,8 @@ except (ZeroDivisionError,ValueError):
 except:
     print ("Default")
 else:
+    print("else")
     #executed if an exception was not raised
 finally:
+    print("finally")
     #always executed,
