@@ -1,8 +1,2 @@
-abcde +/*
-fghij klmn opqr
+ab,cd,ab
 meital 
-meital
-shjkhsdf
-issers
-issers
-ers
