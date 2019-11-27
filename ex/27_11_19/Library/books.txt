@@ -1,0 +1,6 @@
+#book: title, author_id
+"The Old Astronomer", 6
+"The Fault in Our Stars",5
+"Book Jacob 1",4
+"Book Jacob 2",4
+"Book Jacob 3",4
