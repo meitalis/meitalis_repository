@@ -1,5 +1,23 @@
-# sample 6 -
-
+# sample 6 -Write a Python program to solve the Fibonacci sequence using recursion
+# def fibonacci(n):
+#     a, b = 0, 1
+#     for i in range(n):
+#         yield a
+#         a,b = b,a+b
+#
+# for g in fibonacci(10):
+#     print(g)
+#
+#
+# def fibonacci(n):
+#     if n < 2:
+#        return n
+#     a = fibonacci(n - 1) + fibonacci(n - 2)
+#     return a
+#
+#
+# for i in range(10):
+#     print(fibonacci(i))
 # sample 5 - Write a Python program to get the factorial of a non-negative integer
 # def fractional(i,n):
 #     if i == n:
