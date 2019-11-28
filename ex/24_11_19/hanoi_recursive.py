@@ -1,9 +1,10 @@
-disks = 5
+disks = 3
 A = 'A'
 C = 'C'
 B = 'B'
 
 def hanoi(n, A, C, B):
+    print('n', n, A, C, B)
     if n > 0:
         hanoi(n-1, A, B, C)
         print ('n',n,'move disk from ', A, ' to ', C)
