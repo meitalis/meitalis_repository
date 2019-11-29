@@ -1,8 +1,5 @@
-pos_num = input("enter pos num")
-import math as m
-count = m.floor(m.log10(int(pos_num)))
-#count = m.floor(m.log10(int(pos_num)) + 1)
-print (count)
+d = 8
+from math import *
+e = 2
 
-#log10(100) = 2
-#log10(1000) = 3
+print(sqrt(d ** e))
