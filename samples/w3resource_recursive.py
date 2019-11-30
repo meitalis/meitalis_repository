@@ -1,4 +1,17 @@
-# sample 6 -Write a Python program to solve the Fibonacci sequence using recursion
+# sample 6 -Write a Python program to get the sum of a non-negative integer
+# Test Data:
+# sumDigits(345) -> 12
+# sumDigits(45) -> 9
+
+def sumDigits(n):
+    if n == 0:
+        return 0
+    return (n % 10) + (sumDigits(n // 10))
+
+print(sumDigits(345))
+print(sumDigits(45))
+
+# sample 5 -Write a Python program to solve the Fibonacci sequence using recursion
 # def fibonacci(n):
 #     a, b = 0, 1
 #     for i in range(n):
@@ -36,7 +49,7 @@
 #
 # print(factorial(5))
 
-# sample 4 - Write a Python program of recursion list sum.
+# sample 3 - Write a Python program of recursion list sum.
 # Test Data: [1, 2, [3,4], [5,6]]
 # Expected Result: 21
 
@@ -66,7 +79,7 @@
 # 	return total
 # print( recursive_list_sum([1, 2, [3,4],[5,6]]))
 
-# sample 3 - Write a Python program to converting an Integer to a string in any base
+# sample 2 - Write a Python program to converting an Integer to a string in any base
 
 # def to_string(n,base):
 #    conver_tString = "0123456789ABCDEF"
@@ -82,7 +95,7 @@
 
 
 
-# sample 2 - Write a Python program to calculate the sum of a list of numbers
+# sample 1 - Write a Python program to calculate the sum of a list of numbers
 # numbers = [7,6,2,1,1]
 #
 # def sum_list(i):
@@ -103,7 +116,7 @@
 # print(list_sum([2, 4, 5, 6, 7]))
 
 
-# sample 1
+# sample 0
 # def factorial_recursive(n):
 #     # Base case: 1! = 1
 #     if n == 1:
