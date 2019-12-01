@@ -1,14 +1,25 @@
 #1.5
 # with open("Names.txt","r") as fp:
+#     print(max(fp.readlines(),key=len))
 #     print(sorted([(len(line.strip()),line) for cnt, line in enumerate(fp)])[-1][1])
 
-# with open("Names.txt","r") as fp:
-#     print(sum([(len(line.strip())) for cnt, line in enumerate(fp)]))
 
-with open("Names.txt","r") as fp:
-    lst = [(len(line.strip()),line.strip()) for cnt, line in enumerate(fp)]
-    min_v = (min(lst))
-    print(list(line[1] for i,line in enumerate(lst) if line[0] == min_v[0]))
+# with open("Names.txt","r") as fp:
+#     print(sum([(len(line.strip())) for line in fp]))
+
+
+# with open("Names.txt","r") as fp:
+#     lst = [(len(line.strip()),line.strip()) for line in fp]
+#     min_v = (min(lst))
+#     print('\n'.join(list(line[1] for line in lst if line[0] == min_v[0])))
+#another option to solve with sorted: print(sorted(fp.readlines(), key=len))
+
+# with open("Names.txt","r") as fr , open("name_length.txt","w") as fw:
+#     fw.writelines([str(len(line.strip())) + '\n' for line in fr])
+
+# with open("Names.txt","r") as fp:
+#     length = input('Enter name length:')
+#     print(''.join(list(line for line in fp if len(line.strip()) == int(length))))
 
 #1.3.4
 # password = "sljmai ugrf rfc ambc: lglc dmsp mlc rum"
