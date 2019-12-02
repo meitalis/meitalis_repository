@@ -4,25 +4,25 @@ import uuid
 class Book():
 
     def __init__(self, title,author):
-        self.title = title
-        self.author = author
+        self._title = title
+        self._author = author
         self.uuid1 = uuid.uuid1()
 
     @property
     def title(self):
-        return self.__title
+        return self._title
 
     @title.setter
     def title(self,title):
-        self.__title = title
+        self._title = title
 
     @property
     def author(self):
-        return self.__author
+        return self._author
 
     @author.setter
     def author(self,author):
-        self.__author = author
+        self._author = author
 
     def print(self):
         print(f"title {self.title} author {self.author} uuid1 {self.uuid1}")
