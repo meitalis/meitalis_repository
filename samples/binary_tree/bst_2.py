@@ -42,30 +42,45 @@ class Tree():
 
     def __init__(self):
         print('init')
-        self.root = None
+        self._root = None
 
-    def add(self,value,node = None):
-        # Compare the new value with the parent node
-        print('add ',value)
-        if self.root is None:
-            node = Node(value)
-            self.root = node
-            return self.root
-        elif value < node.value:
-            node.left = add(value,node.left)
-        else:
-            node.right = add(Node(value)
+    @property
+    def root(self):
+        return self._root
 
+    @root.setter
+    def root(self, root):
+        self._root = root
 
+    def add(self,value):
+        self.root = self.insert(value,self.root)
+
+    def insert(self,value,node):
+
+        if node is None:
+            node =  Node(value)
+            #print('insert val node is None',node.value)
+            return node
+
+        if value < node.value:
+            node.left = self.insert(value,node.left)
+        elif value > node.value:
+            node.right = self.insert(value, node.right)
+
+        #print('insert val ', node.left,node.value,node.right)
         return node
 
 
+
     def print(self):
-        if self.root.left:
-            self.root.left.print()
-        print(self.root.value)
-        if self.root.right:
-            self.root.right.print()
+        print("print")
+        self.traverseInorder(self.root)
+
+    def traverseInorder(self, node):
+        if node is not None:
+            self.traverseInorder(node.left)
+            print(node.value)
+            self.traverseInorder(node.right)
 
     def inorder(self,func):
         if self.root.left:
@@ -86,7 +101,7 @@ root.add(100)
 root.add(105)
 root.add(104)
 
-#root.print()
+root.print()
 # s = Strategy()
 # root.inorder(s)
 #s.print()

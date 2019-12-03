@@ -19,5 +19,5 @@ class Pixel:
 
     def print_pixel_info(self):#X: 5, Y: 6, Color: (0, 55, 78)
         val = sum(col for col in [self._red, self._green, self._blue])
-        
+
         print(f"X: {self._x}, Y: {self._y}, Color: ({self._red}, {self._green}, {self._blue}) {color}")
