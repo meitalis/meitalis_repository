@@ -1,61 +1,129 @@
-# #!/usr/bin/env python
-# # coding: utf-8
+import numpy as np
+
+dt = np.dtype([('name','U30'),('population','u8'),('mass','f4')])
+a = np.zeros(8,dtype=dt)
+a['name'] = ('Bowhead whale','Blue whale','Fin whale','Pacific white-sided dolphin','Killer whale','Sperm whale','North Atlantic right whale','Southern right whale','temp')
+a['population'] = (9000,20000,100000,1000000,100000,2000000,300,7000,80000)
+a['mass'] = (60,120,70,0.15,4.5,50,75,70,25)
+print(a)
+print('/n************************************************/n')
+a.sort(order=["mass", "population"])
+print(a)
+print('/n************************************************/n')
+idx = np.searchsorted(a["mass"],[25])
+print(idx)
+idx2 = np.searchsorted(a["population"],[100000])
+print(idx2)
+# a = np.zeros(5,dtype='int8,float32,complex')
+# print(a)
 #
-# # In[ ]:
+# dt = np.dtype([('time','f8'),('signal','i4')])
+# a = np.zeros(5,dtype=dt)
 #
+# a[0] = (0.5,4)
+# a[1:3] = [(0.3,3),(0.2,-2)]
+# print(a)
 #
+# a['time'] = np.linspace(0,2,5)
+# print(a)
+# print(a['time'])
+# print(a['time'][-1])
+# print(a['signal'].min())
+
+# a = np.arange(10)
+# b = 4.2
+# x= np.absolute(a-b)
+# x.argmin()
+#########################
+
 # import numpy as np
+# a = np.array([[0,7,4],[3,1,0],[5,6,7]])
+# a
+# b = np.argsort(a[1,:])
+# b
+# c = a[:,b]
+# c
+# d = np.array([2,2,2])
+# d = a[:,d]
+# d
 #
-# # In[ ]:
+#########################
+
+# import numpy as np
+# year = np.array([1900,1904,1990,1993,2000,2014,2016,2100])
+# lyear = year[year%4==0]
+# print(lyear)
+
+#########################
+
+# import numpy as np
+# a = np.arange(1,49).reshape(3,4,4)
+# print("a",a)
+# slice1 = a[0,2,:]
+# slice1
+# print("\n")
+# print("slice1\n",slice1)
 #
+# slice2 = a[2]
+# print("\n")
+# print("slice2\n",slice2)
 #
+# slice3 = a[:,1:2,0:2]
+# print("\n")
+# print("slice3\n",slice3)
+#
+# slice4 = a[2,:,-1:-3:-1]
+# print("\n")
+# print("slice4\n",slice4)
+#
+# slice5 = a[:,-1::-1,0:1]
+# #slice5 = a[:,-1::-1,0]
+#
+# print("\n")
+# print("slice5\n",slice5)
+
+
+#########################
+
+# import numpy as np
+# a = np.ones((3, 3))
+# a
+# b = np.array([2,2,2])
+# c = np.vstack((a,b))
+# c
+# d = np.array([3,3,3,3])
+# e = np.column_stack((c,3*np.ones(4)))
+# e
+
+#########################
+
+# import numpy as np
+# a = np.array([[10,11,12,13],[21,22,23,24]])
+# a
+# b = a.flatten()
+# b
+# c = a.ravel()
+# c
+# c[0] = 50
+# print('a',a)
+# print('c',c)
+# a.resize(1,4)
+# a.resize(1,4,refcheck = False)
+
+#########################
+
+# import numpy as np
 # np.array([1, 2, 3, 4])
-#
-# # In[ ]:
-#
-#
-# # In[ ]:
-#
-#
 # np.array([[1, 2, 3, 4], [5, 6, 7, 8]])
-#
-# # In[ ]:
-#
-#
 # np.zeros((3, 2))
-#
-# # In[ ]:
-#
-#
 # a = [1, 2, 3, 4]
 # np.ones_like(a)
-#
-# # In[ ]:
-#
-#
 # np. * np.zeros(3)
-#
-# # In[ ]:
-#
-#
-# # In[ ]:
-#
-#
 # np.nan * np.zeros(3)
-#
-# # In[ ]:
-#
-#
 # np.array([[1, 2, 3], np.ones(3)])
-#
-# # In[ ]:
-#
-#
 # np.linspace(0, 1000, 6)
 #
-# # In[ ]:
-#
-#
+# #########################
 # # Create a 3 × 3 matrix with values ranging from 0 to 8
 # Create
 # a
@@ -74,31 +142,26 @@
 # # Create an array with values ranging from 10 to 49
 # np.array(range(10, 50))
 
-
 # # Create a vector of size 10 containing only zeros of integer type
 # v = np.zeros(10, dtype=int)
 # v
 
 # # Create a Hilbert matrix of size N × N (N is given by the user)
-import numpy as np
-
-mt = np.zeros((5,5))
-#print(mt)
-
-i = 1
-j = 1
-
-for i in range(0,5):
-    for j in range(0,5):
-        mt[i,j] = i + 1 +j + 1 -1
-
-mt = 1/mt
-print(mt)
-
-
-
+# import numpy as np
+# mt = np.zeros((5,5))
+# #print(mt)
 #
+# i = 1
+# j = 1
 #
+# for i in range(0,5):
+#     for j in range(0,5):
+#         mt[i,j] = i + 1 +j + 1 -1
+#
+# mt = 1/mt
+# print(mt)
+
+
 # import numpy as np
 #
 # n = 3
@@ -117,57 +180,47 @@ print(mt)
 # y = yt
 #
 # print(i, "x", x, "y", y)
-#
 # matrix[x, y] = i
-#
 # matrix
-#
-# # In[55]:
-#
-#
+
+
+
 # a = np.array([[1, 2], [3, 4]])
 # print(a)
 # b = np.array([[1, 0], [0, 1]])
 # print(b)
-#
-# # In[56]:
-#
-#
+
+
 # a = np.array([[1, 2], [3, 4]])
 # print(a)
 # b = np.array([[1, 0], [0, 1]])
 # print(b)
-#
-# # In[61]:
-#
-#
+
+
+
 # a = np.array([[1, 2], [3, 4]])
 # # print(a)
 # b = np.array([[1, 0], [0, 1]])
 # # print(b)
-#
+
+
 # a * b
 # # c = a@b
 # # j = a.dot(b)
 # # print("j",j)
-#
-#
-# # In[64]:
-#
-#
+
+
+
 # a = np.array([[1, 2, 3, 4]])
 # a.resize((2, 2))
 # a
-#
-# # In[70]:
-#
+
 #
 # b = np.array([[1, 2], [3, 4]])
 # b.flatten()
 #
-# # In[72]:
-#
-#
+
+
 # c = np.array([[1, 2], [3, 4]])
 # c.ravel()
 #
