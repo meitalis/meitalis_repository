@@ -1,53 +1,5 @@
-import numpy as np
 
-dt = np.dtype([('name','U30'),('population','u8'),('mass','f4')])
-a = np.zeros(8,dtype=dt)
-a['name'] = ('Bowhead whale','Blue whale','Fin whale','Pacific white-sided dolphin','Killer whale','Sperm whale','North Atlantic right whale','Southern right whale','temp')
-a['population'] = (9000,20000,100000,1000000,100000,2000000,300,7000,80000)
-a['mass'] = (60,120,70,0.15,4.5,50,75,70,25)
-print(a)
-print('/n************************************************/n')
-a.sort(order=["mass", "population"])
-print(a)
-print('/n************************************************/n')
-idx = np.searchsorted(a["mass"],[25])
-print(idx)
-idx2 = np.searchsorted(a["population"],[100000])
-print(idx2)
-# a = np.zeros(5,dtype='int8,float32,complex')
-# print(a)
-#
-# dt = np.dtype([('time','f8'),('signal','i4')])
-# a = np.zeros(5,dtype=dt)
-#
-# a[0] = (0.5,4)
-# a[1:3] = [(0.3,3),(0.2,-2)]
-# print(a)
-#
-# a['time'] = np.linspace(0,2,5)
-# print(a)
-# print(a['time'])
-# print(a['time'][-1])
-# print(a['signal'].min())
 
-# a = np.arange(10)
-# b = 4.2
-# x= np.absolute(a-b)
-# x.argmin()
-#########################
-
-# import numpy as np
-# a = np.array([[0,7,4],[3,1,0],[5,6,7]])
-# a
-# b = np.argsort(a[1,:])
-# b
-# c = a[:,b]
-# c
-# d = np.array([2,2,2])
-# d = a[:,d]
-# d
-#
-#########################
 
 # import numpy as np
 # year = np.array([1900,1904,1990,1993,2000,2014,2016,2100])

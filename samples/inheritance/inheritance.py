@@ -11,8 +11,9 @@ class B:
 
 class D(B):
     def __init__(self):
-        super().__init__() #B.__init__(self)
+        super().__init__()  # B.__init__(self)
         self.y = 42
+
 
 d = D()
 d.bybye()
