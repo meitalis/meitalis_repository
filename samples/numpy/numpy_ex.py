@@ -1,9 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[2]:
-
-
+import numpy as np
 # Create a 4X2 integer array and Prints its attributes
 # Expected Output:
 
@@ -20,25 +15,19 @@
 # 2>. Array dimensions are  2
 # 3>. Length of each element of array in bytes is  2
 
+#
+# import numpy as np
+# #a = np.arange(1,9,dtype=np.short).reshape(4,2)
+# #a = np.array([[64392,31655],[32579,0],[49248,462],[0,0]],dtype=np.int)
+# a = np.random.randint(1,100000,(4,2))
+# print(a)
+# print("shape",a.shape)
+# print("dimensions",a.ndim)
+# #print("Length of each element of array in bytes is",np.dtype(np.int).itemsize)
+# print("Length of each element of array in bytes is",a.itemsize)
 
-# In[24]:
-
-
-import numpy as np
-#a = np.arange(1,9,dtype=np.short).reshape(4,2)
-#a = np.array([[64392,31655],[32579,0],[49248,462],[0,0]],dtype=np.int)
-a = np.random.randint(1,100000,(4,2))
-print(a)
-print("shape",a.shape)
-print("dimensions",a.ndim)
-#print("Length of each element of array in bytes is",np.dtype(np.int).itemsize)
-print("Length of each element of array in bytes is",a.itemsize)
-
-
-# In[5]:
-
-
-# Create a 5X2 integer array from a range between 100 to 200 such that the difference between 
+# *************************************************************************************#
+# Create a 5X2 integer array from a range between 100 to 200 such that the difference between
 # each element is 10
 # Expected Output:
 
@@ -50,16 +39,10 @@ print("Length of each element of array in bytes is",a.itemsize)
 #  [180 190]]
 
 
-# In[31]:
+# a = np.arange(100,200,step=10).reshape(5,2)
+# a
 
-
-a = np.arange(100,200,step=10).reshape(5,2)
-a
-
-
-# In[2]:
-
-
+# *************************************************************************************
 # Following is the given numpy array return array of odd rows and even columns
 # import numpy
 
@@ -81,22 +64,16 @@ a
 #  [54 60]]
 
 
-# In[38]:
+# sampleArray = np.array([[3 ,6, 9, 12], [15 ,18, 21, 24], [27 ,30, 33, 36], [39 ,42, 45, 48], [51 ,54, 57, 60]])
+# print(sampleArray)
+#
+# print(sampleArray[0::2,1::2])
 
-
-sampleArray = np.array([[3 ,6, 9, 12], [15 ,18, 21, 24], [27 ,30, 33, 36], [39 ,42, 45, 48], [51 ,54, 57, 60]])
-print(sampleArray)
-
-print(sampleArray[0::2,1::2])
-
-
-# In[ ]:
-
-
+# *************************************************************************************
 
 # ____Split____ the array into four equal-sized sub-arrays
 # Note: Create an 8X3 integer array from a range between 10 to 34 such that the difference between each element is 1 
-#and then Split the array into four equal-sized sub-arrays.
+# and then Split the array into four equal-sized sub-arrays.
 
 # Expected Output:
 
@@ -117,18 +94,12 @@ print(sampleArray[0::2,1::2])
 # array([[22, 23, 24],[25, 26, 27]]), 
 # array([[28, 29, 30],[31, 32, 33]])]
 
-
-# In[51]:
-
-
-a = np.arange(10,34,step=1).reshape(8,3)
-print(a)
-b = a.reshape(4,2,3)
-print(b)
-
-
-# In[ ]:
-
+#
+# a = np.arange(10,34,step=1).reshape(8,3)
+# print(a)
+# b = a.reshape(4,2,3)
+# print(b)
+# *************************************************************************************
 
 # Sort following NumPy array
 # 7.1- by the second row and
@@ -153,32 +124,27 @@ print(b)
 #  [53 94 66]]
 
 
-# In[70]:
+#
+# sampleArray = np.array([[34,43,73],[82,22,12],[53,94,66]])
+# print("** sampleArray ****")
+# print(sampleArray)
+# b = np.argsort(sampleArray[1,:])
+# print("** b ****")
+# print(b)
+# c = sampleArray[:,b]
+# print("** c ****")
+# print(c)
+# print("** sampleArray ****")
+# print(sampleArray)
+# d = np.argsort(sampleArray[:,1])
+# print("** d ****")
+# print(d)
+# e = sampleArray[d,:]
+# print("** e ****")
+# print(e)
 
+# *************************************************************************************
 
-sampleArray = np.array([[34,43,73],[82,22,12],[53,94,66]])
-print("** sampleArray ****")
-print(sampleArray)
-
-b = np.argsort(sampleArray[2,:])
-print("** b ****")
-print(b)
-c = sampleArray[:,b]
-print("** c ****")
-print(c)
-print("** sampleArray ****")
-print(sampleArray)
-d = np.argsort(sampleArray[:,2])
-print("** d ****")
-print(d)
-e = sampleArray[d,:]
-print("** e ****")
-print(e)
-
-
-
-
-# In[ ]:
 
 
 # Following is the input NumPy array ____delete____ column two and ____insert____ following new column in its place.
@@ -205,43 +171,24 @@ print(e)
 #  [53 10 66]]
 
 
-# In[ ]:
+sampleArray = np.array([[34,43,73],[82,22,12],[53,94,66]])
+print(sampleArray)
+a = np.delete(sampleArray,1,axis=1)
+print(a)
+newColumn = np.array([[10,10,10]])
+b = np.insert(a,1,newColumn,axis=1)
+print(b)
 
 
 
 
 
-# In[ ]:
 
 
 
 
 
-# In[ ]:
 
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
 
 
 
