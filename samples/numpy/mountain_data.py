@@ -25,11 +25,15 @@ data.sort(order=["height"])
 print(data[0])
 
 print("\n******************* The most northely, easterly, southerly and westerly peaks  *******************")
+
+southerly_n = data['name'][np.argmin(data["locationN"])]
 southerly = np.amin(data["locationN"])
+
 northely = np.amax(data["locationN"])
+
 westerly = np.amin(data["locationE"])
 easterly = np.amax(data["locationE"])
-print("southerly",southerly,"northely",northely,"westerly",westerly,"easterly",easterly)
+print("southerly",southerly_n,southerly,"northely",northely,"westerly",westerly,"easterly",easterly)
 
 print("\n******************* The most recent first ascent of the peaks *******************")
 recent_first_ascent = np.amax(data["First_ascent_date"])
