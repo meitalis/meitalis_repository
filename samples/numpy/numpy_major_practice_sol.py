@@ -1,125 +1,57 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 # Import numpy as np and print the version number.
-
-# In[2]:
-
-
 import numpy as np
 print(np.__version__)
-
-
-# In[ ]:
-
 
 # Create a 1D array of numbers from 0 to 9
 # #> array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 
-
-# In[4]:
-
-
 arr = np.arange(10)
 arr
 
-
-# In[ ]:
-
-
 # Create a 3×3 numpy array of all True’s
-
-
-# In[6]:
 
 
 np.full((3, 3), True, dtype=bool)
 np.ones((3,3), dtype=bool)
 
 
-# In[ ]:
-
-
 # Extract all odd numbers from arr
 # arr = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 # #> array([1, 3, 5, 7, 9])
 
-
-# In[7]:
-
-
 arr[arr % 2 == 1]
-
-
-# In[10]:
-
 
 # Replace all odd numbers in arr with -1
 
 # arr = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 
-
-# In[11]:
-
-
 arr[arr % 2 == 1] = -1
 arr
-
-
-# In[15]:
 
 
 # Replace all odd numbers in arr with -1 without changing arr
 # arr = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 #hint - where
 
-
-# In[16]:
-
-
 arr = np.arange(10)
 out = np.where(arr % 2 == 1, -1, arr)
 print(arr)
 out
-
-
-# In[13]:
-
-
 # np.arange(10)
-
 # #> array([ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 # Desired Output:
-
 # #> array([[0, 1, 2, 3, 4],
 # #>        [5, 6, 7, 8, 9]])
-
-
-# In[14]:
-
-
 arr = np.arange(10)
 arr.reshape(2, -1)  # Setting to -1 automatically decides the number of cols
-
-
-# In[17]:
-
 
 # Stack arrays a and b vertically
 # a = np.arange(10).reshape(2,-1)
 # b = np.repeat(1, 10).reshape(2,-1)
 
-
-# In[19]:
-
-
 a = np.arange(10).reshape(2,-1)
 b = np.repeat(1, 10).reshape(2,-1)
 np.vstack([a, b])
-
-
-# In[20]:
-
 
 # Get the common items between a and b
 # a = np.array([1,2,3,2,3,4,3,4,5,6])
@@ -129,16 +61,9 @@ np.vstack([a, b])
 # array([2, 4])
 
 
-# In[21]:
-
-
 a = np.array([1,2,3,2,3,4,3,4,5,6])
 b = np.array([7,2,10,2,7,4,9,4,9,8])
 np.intersect1d(a,b)
-
-
-# In[22]:
-
 
 # Get the positions where elements of a and b match
 # a = np.array([1,2,3,2,3,4,3,4,5,6])
@@ -147,28 +72,16 @@ np.intersect1d(a,b)
 
 # #> (array([1, 3, 5, 7]),)
 
-
-# In[25]:
-
-
 a = np.array([1,2,3,2,3,4,3,4,5,6])
 b = np.array([7,2,10,2,7,4,9,4,9,8])
 
 np.where(a == b)
-
-
-# In[26]:
-
 
 # Get all items between 5 and 10 from a.
 # a = np.array([2, 6, 1, 9, 10, 3, 27])
 # Desired Output:
 
 # (array([6, 9, 10]),)
-
-
-# In[29]:
-
 
 a = np.array([2, 6, 1, 9, 10, 3, 27])
 
@@ -178,16 +91,9 @@ a[index]
 a[(a >= 5) & (a <= 10)]
 
 
-# In[30]:
-
-
 # Reverse the rows of a 2D array arr.
 # # Input
 # arr = np.arange(9).reshape(3,3)
-
-
-# In[31]:
-
 
 # Input
 arr = np.arange(9).reshape(3,3)
@@ -195,47 +101,26 @@ arr = np.arange(9).reshape(3,3)
 arr[::-1]
 
 
-# In[33]:
-
-
 # Reverse the columns of a 2D array arr. (last arr)
-
-
-# In[34]:
 
 
 arr[:, ::-1]
 
 
-# In[ ]:
-
-
 # Create a 2D array of shape 5x3 to contain random decimal numbers between 5 and 10.
 
-
-# In[2]:
 
 
 rand_arr = np.random.randint(low=5, high=10, size=(5,3)) + np.random.random((5,3))
 rand_arr
 
-
-# In[38]:
-
-
 # Print or show only 3 decimal places of the numpy array rand_arr.
 # hint: set_printoptions
-
-
-# In[1]:
 
 
 np.set_printoptions(precision=3)
 rand_arr = np.random.random([5,3])
 rand_arr
-
-
-# In[46]:
 
 
 # Limit the number of items printed in python numpy array a to a maximum of 6 elements.
