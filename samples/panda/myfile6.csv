@@ -1,0 +1,7 @@
+somethong,a,b,c,d,message
+one,1,2,3,4,NA
+two,5,6,,8,world
+three,9,null,11,12,foo
+four,9,nan,11,-1,sss
+five,9,null,n/a,-1.#IND,foo
+six,9,"",'',13,foo
