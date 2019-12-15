@@ -81,3 +81,11 @@ df2.columns
 df3 = df1.filter(regex='(?!TAV)', axis=1)
 df3.head(10)
 
+
+# ////try it
+
+
+df.info()
+df.isna()
+df.isna().sum()
+df.describe()
