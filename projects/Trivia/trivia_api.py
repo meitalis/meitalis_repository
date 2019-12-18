@@ -2,17 +2,19 @@ from trivia import Trivia
 
 users  = {}
 
-def play():
-    Trivia()
+def play(trivia):
+    trivia.play()
 
-def statistics():
-    pass
+def statistics(trivia):
+    trivia.statistics()
 
 def exit_cli():
     print("exit_cli")
     exit()
 
 if __name__== '__main__':
+
+    trivia = Trivia()
 
     commands = {
         '1': play,
@@ -32,4 +34,4 @@ if __name__== '__main__':
                     "2. display game statistics\n"
                     )
 
-        commands.get(cmd,exit_cli)()
+        commands.get(cmd,exit_cli)(trivia)

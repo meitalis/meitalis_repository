@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import IntEnum
 
-class Diffculty(Enum):
-    Easy = 'easy'
-    Medium = 'medium'
-    Hard = 'hard'
+class Diffculty(IntEnum):
+    Easy = 0
+    Medium = 1
+    Hard = 2
 

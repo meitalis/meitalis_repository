@@ -2,7 +2,6 @@ import requests
 import random
 from enums import Diffculty
 import pandas as pd
-#from html.parser import HTMLParser
 from html import unescape
 
 class Trivia():
@@ -13,9 +12,6 @@ class Trivia():
         self.__df_questions = pd.DataFrame()
 
         self.req_categories()
-        self.req_questions()
-
-        self.play()
 
     @property
     def n_questions (self):
@@ -56,45 +52,57 @@ class Trivia():
         category = input("Which category to choose \n")
 
         for difficulty in Diffculty:
-            print(difficulty.__repr__())
-        difficulty = input("Which difficulty level to choose \n")
+            print( difficulty.value + 1, '.', difficulty.name)
+        selected_idx = int(input("Which difficulty level to choose \n"))
+        difficulty = Diffculty(selected_idx-1).name.lower()
 
-        try:
-            difficulty = Diffculty(difficulty)
-        except:
-            print("illegal difficulty. set difficulty to 'easy")
-            difficulty = Diffculty.Easy
-
-        url = f"https://opentdb.com/api.php?amount={num_questions}&category={category}&difficulty={difficulty.value}"
+        print("************** REQUESTED URL ********************************")
+        url = f"https://opentdb.com/api.php?amount={num_questions}&category={category}&difficulty={difficulty}"
+        print(url)
         r = requests.get(url=url)
         data = r.json()
         self.df_questions = pd.DataFrame(data['results'])
 
-
     def play(self):
-        # pd.options.display.max_columns = None
-        #print(self.df_questions.loc[:,['correct_answer','incorrect_answers','question']])
-        #parser = HTMLParser()
+        self.req_questions()
+
+        start = "\033[1m"
+        end = "\033[0;0m"
 
         for index, row in self.df_questions.iterrows():
-            #print(parser.unescape(row.loc['question']))
-            print(unescape(row.loc['question']))
-            print(row.loc['incorrect_answers'])
-            print(row.loc['correct_answer'])
+            print(start + unescape(row.loc['question']) + end)
 
-
-            print("**********************************************")
             answers = unescape(row.loc['incorrect_answers'])
             answers.append(unescape(row.loc['correct_answer']))
             random.shuffle(answers)
             for ind,ans in enumerate(answers):
                 print(ind+1,ans)
-            #ans = input(parser.unescape(row.loc['correct_answer']))
+            selected_ans = int(input(">>> "))
 
+            chosen_ans = ''
+            if (selected_ans > 0) & (selected_ans <= len(answers)):
+                chosen_ans = answers[selected_ans - 1]
+            correct_ans = unescape(row.loc['correct_answer'])
 
+            if correct_ans == chosen_ans:
+                print("correct")
+            else:
+                print("wrong. choose:", chosen_ans, "correct:", correct_ans)
 
+    def statistics(self):
+                cat1        cat2     cat3    total score
+        id 1    [T:2,F:3]   [1,4]               2 + 1
+        id 2
+        id 3
 
+        category_statistics = {'userid1' :
+                               'userid1':
 
+                            }
 
+        difficulty_statistics
 
-
+#from html.parser import HTMLParser
+# pd.options.display.max_columns = None
+#print(self.df_questions.loc[:,['correct_answer','incorrect_answers','question']])
+#parser = HTMLParser()
