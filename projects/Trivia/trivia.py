@@ -90,10 +90,10 @@ class Trivia():
                 print("wrong. choose:", chosen_ans, "correct:", correct_ans)
 
     def statistics(self):
-                cat1        cat2     cat3    total score
-        id 1    [T:2,F:3]   [1,4]               2 + 1
-        id 2
-        id 3
+        #         cat1        cat2     cat3    total score
+        # id 1    [T:2,F:3]   [1,4]               2 + 1
+        # id 2
+        # id 3
 
         category_statistics = {'userid1' :
                                'userid1':
