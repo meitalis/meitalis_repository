@@ -17,7 +17,7 @@ data = {'animal': ['cat', 'cat', 'snake', 'dog', 'dog', 'cat', 'snake', 'cat', '
 'priority': ['yes', 'yes', 'no', 'yes', 'no', 'no', 'no', 'yes', 'no', 'no']}
 labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
 animals_df = pd.DataFrame(data,index=labels)
-animals_df
+print(animals_df)
 
 
 # In[229]:
