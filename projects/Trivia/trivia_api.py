@@ -6,7 +6,7 @@ def play(trivia):
     trivia.play()
 
 def statistics(trivia):
-    trivia.statistics()
+    trivia.show_statistics()
 
 def exit_cli():
     print("exit_cli")
@@ -23,13 +23,16 @@ if __name__== '__main__':
 
     cmd = -1
     while cmd != 0:
+
         user_details = input("enter id & name\n").split()
-        id = user_details[0]
+        id = int(user_details[0])
         if id in users.keys():
             print("user already exists with name", users[id])
         else:
-            users[user_details[0]] = ' '.join(user_details[1:])
+            users[id] = ' '.join(user_details[1:])
 
+
+        trivia.user_id = id
         cmd = input("1. play a trivia game\n" 
                     "2. display game statistics\n"
                     )
