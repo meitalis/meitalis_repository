@@ -45,7 +45,8 @@ class Trivia():
         num_questions = int(input("number of questions\n"))
 
         print(self.__df_categories)
-        self.__category = int(input("Which category to choose \n"))
+        while self.__category not in self.__df_categories.index:
+            self.__category = int(input("choose category from the list \n"))
 
         for difficulty in Diffculty:
             print( difficulty.value + 1, '.', difficulty.name)
@@ -65,6 +66,8 @@ class Trivia():
         start = "\033[1m"
         end = "\033[0;0m"
 
+        correct = 0
+        wrong = 0
         for index, row in self.__df_questions.iterrows():
             print(start + unescape(row.loc['question']) + end)
 
@@ -82,15 +85,17 @@ class Trivia():
 
             if correct_ans == chosen_ans:
                 print("correct")
-                self.__cls_statistics.stat(self.__category, self.__difficulty, True)
+                correct += 1
+                #self.__cls_statistics.stat(self.__category, self.__difficulty, True)
             else:
                 print("wrong. choose:", chosen_ans, "correct:", correct_ans)
-                self.__cls_statistics.stat(self.__category, self.__difficulty, False)
+                wrong += 1
+               # self.__cls_statistics.stat(self.__category, self.__difficulty, False)
 
-
+        self.__cls_statistics.save(self.__category,self.__difficulty,correct,wrong)
 
     def show_statistics(self):
-        self.__cls_statistics.show_statistics()
+        self.__cls_statistics.show()
 
 
 

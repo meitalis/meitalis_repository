@@ -1,4 +1,5 @@
 from trivia import Trivia
+from user import User
 
 users  = {}
 
@@ -24,13 +25,12 @@ if __name__== '__main__':
     cmd = -1
     while cmd != 0:
 
-        user_details = input("enter id & name\n").split()
-        id = int(user_details[0])
-        if id in users.keys():
-            print("user already exists with name", users[id])
-        else:
-            users[id] = ' '.join(user_details[1:])
+        login_name = input("enter login name \n").split()
 
+        if login_name in users:
+            print(f"user {login_name} already exists ")
+        else:
+            users.add(User(login_name))
 
         trivia.user_id = id
         cmd = input("1. play a trivia game\n" 

@@ -1,22 +1,13 @@
 class User():
 
-    def __init__(self, full_name,id):
-        self.__full_name = full_name
-        self.__id = id
+    def __init__(self, login_name):
+        self.__login_name = login_name
 
     @property
-    def full_name(self):
-        return self.__full_name
+    def login_name(self):
+        return self.__login_name
 
-    @full_name.setter
-    def full_name(self,full_name):
-        self.__full_name = full_name
-
-    @property
-    def id(self):
-        return self.__id
-
-    @id.setter
-    def id(self, id):
-        self.__id = id
+    @login_name.setter
+    def login_name(self,login_name):
+        self.__login_name = login_name
 
