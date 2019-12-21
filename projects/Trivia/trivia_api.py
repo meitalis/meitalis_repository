@@ -1,40 +1,47 @@
 from trivia import Trivia
-from user import User
 
-users  = {}
 
 def play(trivia):
     trivia.play()
 
+
 def statistics(trivia):
     trivia.show_statistics()
 
-def exit_cli():
-    print("exit_cli")
+
+def set_user(trivia):
+    trivia.set_user()
+
+
+def exit_cli(trivia):
+    print("EXIT GAME")
     exit()
 
 if __name__== '__main__':
 
     trivia = Trivia()
 
+    set_user(trivia)
+
     commands = {
         '1': play,
-        '2': statistics
+        '2': set_user,
+        '3': statistics,
+        '4': exit_cli
     }
 
     cmd = -1
     while cmd != 0:
-
-        login_name = input("enter login name \n").split()
-
-        if login_name in users:
-            print(f"user {login_name} already exists ")
-        else:
-            users.add(User(login_name))
-
-        trivia.user_id = id
-        cmd = input("1. play a trivia game\n" 
-                    "2. display game statistics\n"
+        cmd = input("Choose:\n"
+                    "1. play a trivia game\n"
+                    "2. switch user\n"
+                    "3. display game statistics\n"
+                    "4. exit game\n"
                     )
+        if cmd=='':
+            continue
 
-        commands.get(cmd,exit_cli)(trivia)
+        commands.get(cmd, exit_cli)(trivia)
+
+
+

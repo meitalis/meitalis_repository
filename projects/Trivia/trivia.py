@@ -1,96 +1,115 @@
-#roiyeho@gmail.com
-
-import requests
-import random
-from enums import Diffculty
 import pandas as pd
+import random
+import re
 from html import unescape
-from statistics import Statistics
 
-class Trivia():
+from user import User
+from enums import Difficulty
+from statistics import Statistics
+from json_handler import JsonHandler
+
+
+class Trivia:
 
     def __init__(self):
 
-        self.__user_id = 0
-        self.__category = 0
-        self.__difficulty = 0
+        self.__category = ""
+        self.__difficulty = ""
+        self.__current_user = ""
+        self.__dict_users = {}
 
-        self.__df_categories = pd.DataFrame()
+        self.__df_categories = JsonHandler.req_categories()
         self.__df_questions = pd.DataFrame()
-
-        self.req_categories()
 
         self.__cls_statistics = Statistics(self.__df_categories)
 
+    def get_params(self):
 
-    @property
-    def user_id(self):
-        return self.__user_id
+        self.__category = ""
+        self.__difficulty = ""
+        num_questions = ""
 
-    @user_id.setter
-    def user_id(self, user_id):
-        self.__user_id = user_id
-        self.__cls_statistics.user_id = user_id
-
-
-    def req_categories(self):
-        url = "https://opentdb.com/api_category.php"
-        r = requests.get(url=url)
-        data = r.json()
-        self.__df_categories = pd.DataFrame(data['trivia_categories'])
-        self.__df_categories.set_index('id',inplace=True)
-
-    def req_questions(self):
-
-        num_questions = int(input("number of questions\n"))
+        pattern = "^[1-9]\d*$"
+        while len(re.findall(pattern, num_questions)) == 0:
+            num_questions = input("number of questions\n")
+        num_questions = int(num_questions)
 
         print(self.__df_categories)
-        while self.__category not in self.__df_categories.index:
-            self.__category = int(input("choose category from the list \n"))
+        while (len(re.findall(pattern, self.__category)) == 0) or\
+                (not (len(re.findall(pattern, self.__category)) == 0) and (int(self.__category) not in self.__df_categories.index)):
+            self.__category = input("choose category from the list \n")
+        self.__category = int(self.__category)
 
-        for difficulty in Diffculty:
+        for difficulty in Difficulty:
             print( difficulty.value + 1, '.', difficulty.name)
-        selected_idx = int(input("Which difficulty level to choose \n"))
-        self.__difficulty = Diffculty(selected_idx-1).name.lower()
 
-        print("************** REQUESTED URL ********************************")
-        url = f"https://opentdb.com/api.php?amount={num_questions}&category={self.__category}&difficulty={self.__difficulty}"
-        print(url)
-        r = requests.get(url=url)
-        data = r.json()
-        self.__df_questions = pd.DataFrame(data['results'])
+        while (len(re.findall(pattern, self.__difficulty)) == 0) or \
+                (not (len(re.findall(pattern, self.__difficulty)) == 0) and (
+                        (int(self.__difficulty)-1) not in list(map(int, Difficulty)))):
+            self.__difficulty = input("Which difficulty level to choose \n")
+
+        self.__difficulty = Difficulty(int(self.__difficulty)-1).name.lower()
+
+        self.__df_questions = JsonHandler.req_questions(num_questions,self.__category,self.__difficulty)
+
+    def set_user(self):
+        login_name = ""
+        while login_name == "":
+            login_name = input("enter login name \n")
+
+        if login_name == self.__current_user:
+            print(f"user {login_name} already logged in ")
+        else:
+            if login_name in self.__dict_users.keys():
+                user = self.__dict_users[login_name]
+            else:
+                user = User(login_name)
+                self.__dict_users[login_name] = user
+
+            self.__current_user = login_name
+            self.__cls_statistics.user = user
 
     def play(self):
-        self.req_questions()
+
+        self.get_params()
+
+        if (self.__df_questions.empty):
+            print("There are no questions that meet the criteria")
+            return
+
 
         start = "\033[1m"
         end = "\033[0;0m"
+        pattern = "^[1-9]\d*$"
 
         correct = 0
         wrong = 0
+
         for index, row in self.__df_questions.iterrows():
+            selected_ans = ""
             print(start + unescape(row.loc['question']) + end)
 
-            answers = row.loc['incorrect_answers']
-            answers.append(row.loc['correct_answer'])
+            answers = unescape(row.loc['incorrect_answers'])
+            answers.append(unescape(row.loc['correct_answer']))
             random.shuffle(answers)
             for ind,ans in enumerate(answers):
                 print(ind+1,ans)
-            selected_ans = int(input(">>> "))
 
-            chosen_ans = ''
-            if (selected_ans > 0) & (selected_ans <= len(answers)):
-                chosen_ans = answers[selected_ans - 1]
+            while (len(re.findall(pattern, selected_ans)) == 0) or \
+                    ( not (len(re.findall(pattern, selected_ans)) == 0) and not ((int(selected_ans) > 0) and (int(selected_ans) <= len(answers)))):
+                selected_ans = input(">>> ")
+
+            selected_ans = int(selected_ans)
+
+            chosen_ans = answers[selected_ans - 1]
             correct_ans = unescape(row.loc['correct_answer'])
 
             if correct_ans == chosen_ans:
                 print("correct")
                 correct += 1
-                #self.__cls_statistics.stat(self.__category, self.__difficulty, True)
             else:
                 print("wrong. choose:", chosen_ans, "correct:", correct_ans)
                 wrong += 1
-               # self.__cls_statistics.stat(self.__category, self.__difficulty, False)
 
         self.__cls_statistics.save(self.__category,self.__difficulty,correct,wrong)
 
