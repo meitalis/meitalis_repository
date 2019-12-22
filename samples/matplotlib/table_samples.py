@@ -23,6 +23,6 @@ axes[1].get_xaxis().set_visible(False)
 
 df.plot(ax=axes[2], legend=False)
 plotting.table(axes[2], np.round(df.describe(), 2),
-               loc='upper right', colWidths=[0.2, 0.2, 0.2])
+                loc='upper right', colWidths=[0.2, 0.2, 0.2])
 
 plt.show()
