@@ -12,6 +12,8 @@ def statistics(trivia):
 def set_user(trivia):
     trivia.set_user()
 
+def insert_question(trivia):
+    trivia.insert_question()
 
 def exit_cli(trivia):
     print("EXIT GAME")
@@ -27,7 +29,8 @@ if __name__== '__main__':
         '1': play,
         '2': set_user,
         '3': statistics,
-        '4': exit_cli
+        '4': insert_question,
+        '5': exit_cli
     }
 
     cmd = -1
@@ -36,7 +39,8 @@ if __name__== '__main__':
                     "1. play a trivia game\n"
                     "2. switch user\n"
                     "3. display game statistics\n"
-                    "4. exit game\n"
+                    "4. insert question\n"
+                    "5. exit game\n"
                     )
         if cmd=='':
             continue

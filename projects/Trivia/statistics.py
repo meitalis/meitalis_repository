@@ -16,7 +16,8 @@ class Statistics:
         self.__user = user
 
     def save(self,category,difficulty,correct,wrong):
-        self.__df_games = self.__df_games.append({'login_name':self.__user.login_name,'category':category,'difficulty':difficulty,'correct':correct,'wrong':wrong},ignore_index=True)
+        self.__df_games = self.__df_games.append({'login_name':self.__user.login_name,'category':category,
+                                                  'difficulty':difficulty,'correct':correct,'wrong':wrong},ignore_index=True)
 
     def show(self):
         if self.__df_games.empty:

@@ -7,7 +7,7 @@ from user import User
 from enums import Difficulty
 from statistics import Statistics
 from json_handler import JsonHandler
-
+from db_handler import DBHandler
 
 class Trivia:
 
@@ -17,57 +17,15 @@ class Trivia:
         self.__difficulty = ""
         self.__current_user = ""
         self.__dict_users = {}
+        self.__df_questions = pd.DataFrame()
 
         self.__df_categories = JsonHandler.req_categories()
-        self.__df_questions = pd.DataFrame()
+
+        db_handler = DBHandler('odbc')
+        db_handler.fillCategory(self.__df_categories)
 
         self.__cls_statistics = Statistics(self.__df_categories)
 
-    def get_params(self):
-
-        self.__category = ""
-        self.__difficulty = ""
-        num_questions = ""
-
-        pattern = "^[1-9]\d*$"
-        while len(re.findall(pattern, num_questions)) == 0:
-            num_questions = input("number of questions\n")
-        num_questions = int(num_questions)
-
-        print(self.__df_categories)
-        while (len(re.findall(pattern, self.__category)) == 0) or\
-                (not (len(re.findall(pattern, self.__category)) == 0) and (int(self.__category) not in self.__df_categories.index)):
-            self.__category = input("choose category from the list \n")
-        self.__category = int(self.__category)
-
-        for difficulty in Difficulty:
-            print( difficulty.value + 1, '.', difficulty.name)
-
-        while (len(re.findall(pattern, self.__difficulty)) == 0) or \
-                (not (len(re.findall(pattern, self.__difficulty)) == 0) and (
-                        (int(self.__difficulty)-1) not in list(map(int, Difficulty)))):
-            self.__difficulty = input("Which difficulty level to choose \n")
-
-        self.__difficulty = Difficulty(int(self.__difficulty)-1).name.lower()
-
-        self.__df_questions = JsonHandler.req_questions(num_questions,self.__category,self.__difficulty)
-
-    def set_user(self):
-        login_name = ""
-        while login_name == "":
-            login_name = input("enter login name \n")
-
-        if login_name == self.__current_user:
-            print(f"user {login_name} already logged in ")
-        else:
-            if login_name in self.__dict_users.keys():
-                user = self.__dict_users[login_name]
-            else:
-                user = User(login_name)
-                self.__dict_users[login_name] = user
-
-            self.__current_user = login_name
-            self.__cls_statistics.user = user
 
     def play(self):
 
@@ -116,5 +74,51 @@ class Trivia:
     def show_statistics(self):
         self.__cls_statistics.show()
 
+    def get_params(self):
 
+        self.__category = ""
+        self.__difficulty = ""
+        num_questions = ""
 
+        pattern = "^[1-9]\d*$"
+        while len(re.findall(pattern, num_questions)) == 0:
+            num_questions = input("number of questions\n")
+        num_questions = int(num_questions)
+
+        print(self.__df_categories)
+        while (len(re.findall(pattern, self.__category)) == 0) or\
+                (not (len(re.findall(pattern, self.__category)) == 0) and (int(self.__category) not in self.__df_categories.index)):
+            self.__category = input("choose category from the list \n")
+        self.__category = int(self.__category)
+
+        for difficulty in Difficulty:
+            print( difficulty.value + 1, '.', difficulty.name)
+
+        while (len(re.findall(pattern, self.__difficulty)) == 0) or \
+                (not (len(re.findall(pattern, self.__difficulty)) == 0) and (
+                        (int(self.__difficulty)-1) not in list(map(int, Difficulty)))):
+            self.__difficulty = input("Which difficulty level to choose \n")
+
+        self.__difficulty = Difficulty(int(self.__difficulty)-1).name.lower()
+
+        self.__df_questions = JsonHandler.req_questions(num_questions,self.__category,self.__difficulty)
+
+    def set_user(self):
+        login_name = ""
+        while login_name == "":
+            login_name = input("enter login name \n")
+
+        if login_name == self.__current_user:
+            print(f"user {login_name} already logged in ")
+        else:
+            if login_name in self.__dict_users.keys():
+                user = self.__dict_users[login_name]
+            else:
+                user = User(login_name)
+                self.__dict_users[login_name] = user
+
+            self.__current_user = login_name
+            self.__cls_statistics.user = user
+
+    def insert_question(self):
+        login_name = input("enter login name \n")
