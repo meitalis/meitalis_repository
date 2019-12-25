@@ -1,0 +1,4 @@
+conn_string = "Driver={ODBC Driver 13 for SQL Server};" \
+              "Server=localhost;" \
+              "Database=Northwind;" \
+              "Trusted_Connection=yes;"
