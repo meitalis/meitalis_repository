@@ -1,0 +1,57 @@
+use productsdb
+
+const name = ["Audi","Swift","Maruthi800","Polo","Volkswagen"];
+const color = ["Red","Black","Blue","White","JetBlue"];
+const cno = ["H101","H102","H103","H104","H105"];
+const mfdcountry = ["Germany","Italy","India","Japan","Germany"];
+const speed = [75,60,70,65,80];
+
+for (let index = 0; index < name.length; index++) {
+        db.cars.insertOne({"_id": index,"name":name[index],"color":color [index],"cno":cno [index],"mfdcountry":mfdcountry  [index],"speed":speed  [index]});
+   
+}
+
+
+db.cars.find()
+
+db.cars.update(
+   { _id: 3 },
+   {
+     $inc: { "speed": -10}
+   }
+)
+
+
+db.cars.update(
+   { "name": "Polo" },
+   {
+     $set: { "color": "Cyan"}
+   }
+)
+
+db.cars.updateMany(
+   { "mfdcountry": "Germany" },
+   {
+     $set: { "speed": 50}
+   }
+)
+
+const allowed = ["David","Martha","James"];
+
+db.cars.update(
+   { _id: 4 },
+   {
+     $set: { "allowed": ["David","Martha","James"]}
+   }
+)
+
+db.cars.insertOne({"_id": 4,"name":name[4],"color":color [4],"cno":cno [4],"mfdcountry":mfdcountry[4],"speed":speed[4]});
+
+
+db.cars.update(
+   { _id: 4 },
+   {
+     $set: { "allowed.1": "Lisa"}
+   }
+)
+

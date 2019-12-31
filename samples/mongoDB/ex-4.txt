@@ -1,0 +1,30 @@
+use car
+
+let name = ["Audi","Swift","Maruth","Polo","Volks"];
+let color = ["Red","Black","Blue","White","JetBlue"];
+let cno = "H10";
+let mfdcountry = ["Germany","Italy","India","Japan","Germay"];
+let speed = [75,60,70,65,80];
+
+
+for (let index = 0; index < name.length; index++) {
+        db.cars.insertOne({"_id":index+1,"name":name[index],"color":color[index],"cno":cno + index,"mfdcountry":mfdcountry[index],"speed":speed[index]});
+   
+}
+
+
+x = db.cars
+// add +10
+x.updateOne({_id:3},{$inc:{speed:10}})
+// decrease by 10
+x.updateOne({_id:3},{$inc:{speed:-10}})
+
+//change color
+x.updateOne({name:"Polo"},{$set: {"color":"Cyan"}})
+
+x.updateMany({mfdcountry:"Germany"},{$set:{speed:50}})
+
+x.updateOne({_id:4},{$push: {"drivers":{$each:["david","martha","james"]}}})
+
+
+x.updateOne({_id:4,drivers:"martha"},{$set: {"drivers.$": "LISA"}})

@@ -1,0 +1,25 @@
+use blog
+
+
+EDITOR = "notepad"
+var post
+edit post
+
+// inside the notepad editor
+{
+	"content" : "my first Comment",
+	"publishedDate" : ISODate("2020-01-11T22:00:00Z"),
+	"comments" : [
+		{
+			"comment" : "Good",
+			"date" : ISODate("2020-01-12T22:00:00Z"),
+			"author" : {
+				"Fn" : "First",
+				"Ln" : "Last"
+			}
+		}
+	]
+}
+
+// back to mongodb shell
+db.posts.insertOne(post);

@@ -1,0 +1,34 @@
+// option 1 : js
+
+const name = ["Berk","Bend","Eugene"];
+const state = ["CA","OR","CA"];
+const qty = [648,491,233];
+
+for (let index = 0; index < name.length; index++) {
+        db.deliver.insertOne({"_id":index+1,"city":name[index],"state":state[index],"qty":qty[index]});
+   
+}
+
+
+// option 2 : using variable and edit an array of documents
+
+var items
+EDITOR = "notepad"
+edit items
+
+// inside the editor:
+
+[
+{"_id":1,"city":"Berkely","state":"CA","qty":648},
+{"_id":2,"city":"Bend","state":"OR","qty":491},
+{"_id":3,"city":"Kensing","state":"CA","qty":233}
+]
+
+//back to the shell
+
+use delivers
+db.deliveries.insertMany(items)
+
+
+//deleting all documents:
+db.deliveries.deleteMany({"state":"CA"})

@@ -1,0 +1,16 @@
+use productsdb
+
+const name = ["Cola","Kinly","Coffee"];
+const price = [12,15,20];
+const w = [1.5,2.5,4.6];
+
+for (let index = 0; index < name.length; index++) {
+        db.products.insertOne({"name":name[index],"price":price[index],"w":w[index]});
+   
+}
+
+// change the cola price to 100
+db.products.updateOne({"name":"Cola"},{"price":100})
+
+// delete the cola document
+db.products.deleteOne({"name":"Cola"})

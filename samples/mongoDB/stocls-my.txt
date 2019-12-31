@@ -1,0 +1,4 @@
+db.stocks.find({"Profit Margin" : {$gt:0.5}},{"Ticker":1,"Profit Margin":1})
+
+db.stocks.find({"EPS growth quarter over quarter" : {$lt:0}},{"Ticker":1,"EPS growth quarter over quarter":1,"Profit Margin":1})
+

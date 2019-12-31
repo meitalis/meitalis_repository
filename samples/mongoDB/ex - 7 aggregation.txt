@@ -1,0 +1,22 @@
+//create deliveirs collection
+
+var city = ["Berkeley, CA","Bend, OR","Kensington, CA","Eugene, OR","Renu, NV","Protland, OR","Sacramento, CA"];
+var qty = [648,491,233,842,655,408,574];
+var counter = 0;
+
+for(var i = 0; i<=6;i++){
+    db.deliverNew.insertOne({"_id":i+1,"city":city[i],"qty":qty[i]});
+    counter++;
+}
+
+
+// perform an aggregation
+
+	      db.deliverNew.aggregate(
+                {$project: {"city": {$split: ["$city",","]},"qty":"$qty"}},
+                {$group: {"_id":{state: {$arrayElemAt:["$city",1]}}
+                            ,"total":{$sum:"$qty"}
+                            ,"count":{$sum:1}
+                        }
+                }
+                )

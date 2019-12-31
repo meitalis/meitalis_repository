@@ -1,0 +1,2 @@
+db.books.find({isbn:"193518217X"}) 
+> db.books.findOne({"status":"PUBLISH"})   

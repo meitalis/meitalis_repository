@@ -1,0 +1,12 @@
+make sure mongodb installed as env variable on your pc
+
+download json file and save it on c:\data
+
+open the command line and navigate to c:\data
+
+enter the following line in the command line
+
+mongoimport -d booksdb -c books books.json
+
+
+
