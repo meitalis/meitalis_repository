@@ -1,0 +1,87 @@
+:help commands
+:kelp keys // keyboard shortcuts
+:sysinfo
+:history
+:clear //clear all panes
+
+:play movie graph
+
+####################################################################################
+Here are simplified syntax examples for specifying a node:
+
+()
+(variable)
+(:Label)
+(variable:Label)
+(:Label1:Label2)
+(variable:Label1:Label2)
+
+()                  // anonymous node not be referenced later in the query
+(p)                 // variable p, a reference to a node used later
+(:Person)           // anonymous node of type Person
+(p:Person)          // p, a reference to a node of type Person
+
+####################################################################################
+
+Here are simplified syntax examples for a query:
+
+MATCH (variable)
+RETURN variable
+MATCH (variable:Label)
+RETURN variable
+
+MATCH (n)           // returns all nodes in the graph
+RETURN n
+MATCH (p:Person)    // returns all Person nodes in the graph
+RETURN p
+
+####################################################################################
+
+CALL db.schema()
+CALL db.propertyKeys
+####################################################################################
+
+Here are simplified syntax examples for a query where we specify one or more values
+for properties that will be used to filter the query results and return a subset of the graph:
+
+MATCH (variable {propertyKey: propertyValue})
+RETURN variable
+MATCH (variable:Label {propertyKey: propertyValue})
+RETURN variable
+MATCH (variable {propertyKey1: propertyValue1, propertyKey2: propertyValue2})
+RETURN variable
+MATCH (variable:Label {propertyKey: propertyValue, propertyKey2: propertyValue2})
+RETURN variable
+
+
+MATCH (p:Person {born: 1970})
+RETURN p
+
+Here is an example where we specify two property values for the query. both properties must match.
+
+MATCH (m:Movie {released: 2003, tagline: 'Free your mind'})
+RETURN m
+####################################################################################
+
+ere are simplified syntax examples for returning property values, rather than nodes:
+
+MATCH (variable {prop1: value})
+RETURN variable.prop2
+MATCH (variable:Label {prop1: value})
+RETURN variable.prop2
+MATCH (variable:Label {prop1: value, prop2: value})
+RETURN variable.prop3
+MATCH (variable {prop1:value})
+RETURN variable.prop2, variable.prop3
+
+MATCH (p:Person {born: 1965})
+RETURN p.name, p.born
+
+Here is the simplified syntax for specifying an alias for a property value:
+
+MATCH (variable:Label {propertyKey1: propertyValue1})
+RETURN variable.propertyKey2 AS alias2
+
+MATCH (p:Person {born: 1965})
+RETURN p.name AS name, p.born AS `birth year`
+####################################################################################
