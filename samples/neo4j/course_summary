@@ -85,3 +85,351 @@ RETURN variable.propertyKey2 AS alias2
 MATCH (p:Person {born: 1965})
 RETURN p.name AS name, p.born AS `birth year`
 ####################################################################################
+Here is how Cypher uses ASCII art to specify path used for a query:
+
+()          // a node
+()--()      // 2 nodes have some type of relationship
+()-->()     // the first node has a relationship to the second node
+()<--()     // the second node has a relationship to the first node
+
+MATCH (node1)-[:REL_TYPE]->(node2)
+RETURN node1, node2
+MATCH (node1)-[:REL_TYPEA \| :REL_TYPEB]->(node2)
+RETURN node1, node2
+####################################################################################
+
+Here are other examples of using the anonymous relationship:
+
+MATCH (p:Person)--(m:Movie {title: 'The Matrix'})
+RETURN p, m
+MATCH (m:Movie)<--(p:Person {name: 'Keanu Reeves'})
+RETURN p, m
+
+####################################################################################
+Just as you can specify property values for filtering nodes for a query,
+you can specify property values for a relationship.
+This query returns the name of of the person who gave the movie a rating of 65.
+
+MATCH (p:Person)-[:REVIEWED {rating: 65}]->(:Movie {title: 'The Da Vinci Code'})
+RETURN p.name
+
+we can write a Cypher query to return all followers of the followers of Jessica Thompson.
+
+MATCH  (p:Person)-[:FOLLOWS]->(:Person)-[:FOLLOWS]->(:Person {name:'Jessica Thompson'})
+RETURN p
+
+MATCH  path = (:Person)-[:FOLLOWS]->(:Person)-[:FOLLOWS]->(:Person {name:'Jessica Thompson'})
+RETURN  path
+
+MATCH (a:Person)-[:ACTED_IN]->(m:Movie)<-[:DIRECTED]-(d:Person)
+RETURN a.name, m.title, d.name
+
+####################################################################################
+
+MATCH (p:Person)-[:ACTED_IN]->(m:Movie {released: 2008})
+RETURN p, m
+Here is one way you specify the same query using the WHERE clause:
+
+MATCH (p:Person)-[:ACTED_IN]->(m:Movie)
+WHERE m.released = 2008
+RETURN p, m
+
+####################################################################################
+
+MATCH (p:Person)-[:ACTED_IN]->(m:Movie)
+WHERE m.released >= 2003 AND m.released <= 2004
+RETURN p.name, m.title, m.released
+
+You can also specify the same query as:
+
+MATCH (p:Person)-[:ACTED_IN]->(m:Movie)
+WHERE 2003 <= m.released <= 2004
+RETURN p.name, m.title, m.released
+
+####################################################################################
+Testing the existence of a property
+
+MATCH (p:Person)-[:ACTED_IN]->(m:Movie)
+WHERE p.name='Jack Nicholson' AND exists(m.tagline)
+RETURN m.title, m.tagline
+
+####################################################################################
+Testing strings
+You can specify STARTS WITH, ENDS WITH, and CONTAINS.
+
+MATCH (p:Person)-[:ACTED_IN]->()
+WHERE p.name STARTS WITH 'Michael'
+RETURN p.name
+
+regular expressions:
+
+MATCH (p:Person)
+WHERE p.name =~'Tom.*'
+RETURN p.name
+####################################################################################
+Testing with patterns:
+
+MATCH (p:Person)-[:WROTE]->(m:Movie)
+WHERE NOT exists( (p)-[:DIRECTED]->(m) )
+RETURN p.name, m.title
+
+Here is another example where we want to find Gene Hackman and the movies that he acted in with another
+person who also directed the movie:
+
+MATCH (gene:Person)-[:ACTED_IN]->(m:Movie)<-[:ACTED_IN]-(other:Person)
+WHERE gene.name= 'Gene Hackman'
+AND exists( (other)-[:DIRECTED]->(m) )
+RETURN  gene, other, m
+####################################################################################
+Testing with list values:
+
+MATCH (p:Person)
+WHERE p.born IN [1965, 1970]
+RETURN p.name as name, p.born as yearBorn
+
+MATCH (p:Person)-[r:ACTED_IN]->(m:Movie)
+WHERE  'Neo' IN r.roles AND m.title='The Matrix'
+RETURN p.name
+####################################################################################
+This MATCH clause includes a pattern specified by two paths separated by a comma:
+
+MATCH (a:Person)-[:ACTED_IN]->(m:Movie),
+      (m:Movie)<-[:DIRECTED]-(d:Person)
+WHERE m.released = 2000
+RETURN a.name, m.title, d.name
+If possible, you should write the same query as follows:
+
+MATCH (a:Person)-[:ACTED_IN]->(m:Movie)<-[:DIRECTED]-(d:Person)
+WHERE m.released = 2000
+RETURN a.name, m.title, d.name
+
+MATCH (keanu:Person)-[:ACTED_IN]->(movie:Movie)<-[:ACTED_IN]-(n:Person),
+     (hugo:Person)
+WHERE keanu.name='Keanu Reeves' AND
+      hugo.name='Hugo Weaving'
+AND NOT (hugo)-[:ACTED_IN]->(movie)
+RETURN n.name
+
+MATCH (meg:Person)-[:ACTED_IN]->(m:Movie)<-[:DIRECTED]-(d:Person),
+      (other:Person)-[:ACTED_IN]->(m)
+WHERE meg.name = 'Meg Ryan'
+RETURN m.title as movie, d.name AS director , other.name AS `co-actors`
+
+MATCH megPath = (meg:Person)-[:ACTED_IN]->(m:Movie)<-[:DIRECTED]-(d:Person),
+      (other:Person)-[:ACTED_IN]->(m)
+WHERE meg.name = 'Meg Ryan'
+RETURN megPath
+
+####################################################################################
+Here is an example where we want to retrieve all Person nodes that are exactly two hops away:
+
+MATCH (follower:Person)-[:FOLLOWS*2]->(p:Person)
+WHERE follower.name = 'Paul Blythe'
+RETURN p
+
+Retrieve all paths of any length with the relationship, :RELTYPE from nodeA to nodeB and beyond:
+(nodeA)-[:RELTYPE*]->(nodeB)
+
+Retrieve all paths of any length with the relationship,
+:RELTYPE from nodeA to nodeB or from nodeB to nodeA and beyond.
+This is usually a very expensive query so you should place limits on how many nodes are retrieved:
+(nodeA)-[:RELTYPE*]-(nodeB)
+
+Retrieve the paths of length 3 with the relationship, :RELTYPE from nodeA to nodeB:
+(node1)-[:RELTYPE*3]->(node2)
+
+Retrieve the paths of lengths 1, 2, or 3 with the relationship,
+:RELTYPE from nodeA to nodeB, nodeB to nodeC, as well as, nodeC to _nodeD) (up to three hops):
+(node1)-[:RELTYPE*1..3]->(node2)
+
+shortestPath:
+
+MATCH p = shortestPath((m1:Movie)-[*]-(m2:Movie))
+WHERE m1.title = 'A Few Good Men' AND
+      m2.title = 'The Matrix'
+RETURN  p
+
+####################################################################################
+OPTIONAL MATCH :
+
+MATCH (p:Person)
+WHERE p.name STARTS WITH 'James'
+OPTIONAL MATCH (p)-[r:REVIEWED]->(m:Movie)
+RETURN p.name, type(r), m.title
+
+####################################################################################
+Aggregation:
+In Cypher, there is no “GROUP BY” clause as there is in SQL.
+The graph engine uses non-aggregated columns as an automatic grouping key.
+
+The Cypher count() function is very useful when you want to count the number of occurrences of a
+particular query result. If you specify count(n), the graph engine calculates the number of occurrences
+of n. If you specify count(*), the graph engine calculates the number of rows retrieved,
+ including those with null values. When you use count(), the graph engine does an implicit group by
+ based upon the aggregation.
+
+There are more aggregating functions such as min() or max()
+
+// implicitly groups by a.name and d.name
+MATCH (a)-[:ACTED_IN]->(m)<-[:DIRECTED]-(d)
+RETURN a.name, d.name, count(*)
+
+collect() that enables you to aggregate a value into a list:
+
+MATCH (p:Person)-[:ACTED_IN]->(m:Movie)
+WHERE p.name ='Tom Cruise'
+RETURN collect(m.title) AS `movies for Tom Cruise`
+
+MATCH (actor:Person)-[:ACTED_IN]->(m:Movie)<-[:DIRECTED]-(director:Person)
+RETURN actor.name, director.name, count(m) AS collaborations, collect(m.title) AS movies
+####################################################################################
+
+WITH:
+When you use the WITH clause, you specify the variables from the previous part of the
+query you want to pass on to the next part of the query. In this example,
+the variable a is specified to be passed on in the query, but m is not.
+Since m is not specified to be passed on, m will not be available later in the query.
+Notice that for the RETURN clause, a, numMovies, and movies are available for use.
+
+NOTE	You have to name all expressions with an alias in a WITH that are not simple variables.
+
+MATCH (a:Person)-[:ACTED_IN]->(m:Movie)
+WITH  a, count(a) AS numMovies, collect(m.title) as movies
+WHERE numMovies > 1 AND numMovies < 4
+RETURN a.name, numMovies, movies
+
+MATCH (p:Person)
+WITH p, size((p)-[:ACTED_IN]->(:Movie)) AS movies
+WHERE movies >= 5
+OPTIONAL MATCH (p)-[:DIRECTED]->(m:Movie)
+RETURN p.name, m.title
+
+####################################################################################
+
+We can eliminate the duplication by specifying the DISTINCT keyword as follows:
+
+MATCH (p:Person)-[:DIRECTED | :ACTED_IN]->(m:Movie)
+WHERE p.name = 'Tom Hanks'
+RETURN m.released, collect(DISTINCT m.title) AS movies
+
+####################################################################################
+Ordering results
+
+MATCH (p:Person)-[:DIRECTED | :ACTED_IN]->(m:Movie)
+WHERE p.name = 'Tom Hanks'
+RETURN m.released, collect(DISTINCT m.title) AS movies ORDER BY m.released DESC
+
+####################################################################################
+Limiting the number of results:
+
+MATCH (m:Movie)
+RETURN m.title as title, m.released as year ORDER BY m.released DESC LIMIT 10
+
+Controlling the number of results using WITH:
+
+MATCH (a:Person)-[:ACTED_IN]->(m:Movie)
+WITH a, count(*) AS numMovies, collect(m.title) as movies
+WHERE numMovies = 5
+RETURN a.name, numMovies, movies
+####################################################################################
+Lists:
+
+MATCH (a:Person)-[:ACTED_IN]->(m:Movie)
+WITH  m, count(m) AS numCast, collect(a.name) as cast
+RETURN m.title, cast, numCast ORDER BY size(cast)
+
+Unwinding lists
+WITH [1, 2, 3] AS list
+UNWIND list AS row
+RETURN list, row
+####################################################################################
+Dates:
+
+MATCH (actor:Person)-[:ACTED_IN]->(:Movie)
+WHERE exists(actor.born)
+// calculate the age
+with DISTINCT actor, date().year  - actor.born as age
+RETURN actor.name, age as `age today`
+      ORDER BY actor.born DESC
+
+####################################################################################
+CREATE (optionalVariable optionalLabels {optionalProperties})
+
+CREATE (:Movie {title: 'Batman Begins'})
+
+CREATE (:Movie:Action {title: 'Batman Begins'})
+
+CREATE (m:Movie:Action {title: 'Batman Begins'})
+
+Creating multiple nodes:
+CREATE
+(:Person {name: 'Michael Caine', born: 1933}),
+(:Person {name: 'Liam Neeson', born: 1952}),
+(:Person {name: 'Katie Holmes', born: 1978}),
+(:Person {name: 'Benjamin Melniker', born: 1913})
+
+####################################################################################
+Adding labels to a node:
+If you attempt to add a label to a node for which the label already exists, the SET processing is ignored.
+
+SET x:Label         // adding one label to node referenced by the variable x
+SET x:Label1:Label2 // adding two labels to node referenced by the variable x
+
+Here is an example where we add the Action label to the node that has a label, Movie:
+
+MATCH (m:Movie)
+WHERE m.title = 'Batman Begins'
+SET m:Action
+RETURN labels(m)   //labels()  returns the set of labels for the node.
+####################################################################################
+Removing labels from a node:
+REMOVE x:Label    // remove the label from the node referenced by the variable x
+
+MATCH (m:Movie:Action)
+WHERE m.title = 'Batman Begins'
+REMOVE m:Action
+RETURN labels(m)
+####################################################################################
+Adding properties to a node:
+ If the value specified is null, the property is removed
+
+SET x.propertyName = value
+SET x.propertyName1 = value1    , x.propertyName2 = value2
+SET x = {propertyName1: value1, propertyName2: value2}
+
++= the value at valueX is updated if the propertyNnameX exists for the node.
+ If the propertyNameX does not exist for the node, then the property is added to the node:
+SET x += {propertyName1: value1, propertyName2: value2}
+
+MATCH (m:Movie)
+WHERE m.title = 'Batman Begins'
+SET m.released = 2005, m.lengthInMinutes = 140
+RETURN m
+
+MATCH (m:Movie)
+WHERE m.title = 'Batman Begins'
+SET  m = {title: 'Batman Begins',
+          released: 2005,
+          lengthInMinutes: 140,
+          videoFormat: 'DVD',
+          grossMillions: 206.5}
+RETURN m
+
+MATCH (m:Movie)
+WHERE m.title = 'Batman Begins'
+SET  m += { grossMillions: 300,
+            awards: 66}
+RETURN m
+####################################################################################
+Removing properties from a node: there are 2 ways:
+There is no restriction that nodes of the same type must have the same properties.
+
+1. REMOVE x.propertyName
+
+2. SET x.propertyName = null
+
+MATCH (m:Movie)
+WHERE m.title = 'Batman Begins'
+SET m.grossMillions = null
+REMOVE m.videoFormat
+RETURN m
