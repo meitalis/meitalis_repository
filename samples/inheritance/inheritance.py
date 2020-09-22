@@ -14,6 +14,9 @@ class D(B):
         super().__init__()  # B.__init__(self)
         self.y = 42
 
+    def bybye(self):
+        print("byebye dddd")
 
 d = D()
 d.bybye()
+d.hello()
